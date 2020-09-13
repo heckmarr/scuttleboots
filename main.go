@@ -46,7 +46,7 @@ func main() {
 
 	var screen Screen
 	screen = screen.Init()
-	screen.Fill("#")
+	screen = screen.Fill("#")
 	fmt.Println("These are the screen dimensions")
 	//They work on the current terminal, ie if you're
 	//connected over ssh, you can get the dimensions
