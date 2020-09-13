@@ -4,13 +4,17 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"time"
 )
 
 func main() {
 	fmt.Println("This will be the server")
 	server := gin.Default()
 	server.GET("/screen", RenderScreen)
-
+	server.Run(":80")
+	for {
+		time.Sleep(100*time.Millisecond)
+	}
 }
 
 func RenderScreen(c *gin.Context) {
