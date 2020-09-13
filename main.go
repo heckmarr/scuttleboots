@@ -17,6 +17,9 @@ func main() {
 
 	screen := DetermineWinSize()
 	fmt.Println("These are the screen dimensions")
+	//They work on the current terminal, ie if you're
+	//connected over ssh, you can get the dimensions
+	//of the screen you're currently looking at
 	fmt.Println(screen)
 
 	fmt.Println("This will be the server")
