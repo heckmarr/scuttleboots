@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/ssh/terminal"
 	"net/http"
 	"time"
 )
@@ -12,18 +13,40 @@ type Screen struct {
 	lines map[int]string
 	cols map[int]string
 }
-func (s Screen) Init() {
+
+
+
+
+func (s Screen) Init() Screen {
+	cols, lines, err := terminal.GetSize(0)
+	if err != nil {
+		panic(err)
+	}
+	s.initLines = lines
+	s.initCols = cols
 	s.lines = make(map[int]string, s.initLines)
+
 	s.cols = make(map[int]string, s.initCols)
+	return s
 }
 
+func (s Screen) Fill(val string) Screen {
+	for i := 0;i < s.initLines;i++ {
+		for c:= 0;c < s.initCols;c++ {
+			s.cols[c] = val
+		}
+		s.lines[i] = val
+	}
+	fmt.Println(s)
+	return s
+}
 
 
 func main() {
 
 	var screen Screen
-	screen.Init()
-	fmt.Println(screen)
+	screen = screen.Init()
+	screen.Fill("#")
 	fmt.Println("These are the screen dimensions")
 	//They work on the current terminal, ie if you're
 	//connected over ssh, you can get the dimensions
