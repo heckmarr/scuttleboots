@@ -3,23 +3,20 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"golang.org/x/crypto/ssh/terminal"
 	"net/http"
 	"time"
 )
 type Screen struct {
-	lines int
-	cols  int
-	win   [][]string
+	initLines int
+	initCols  int
+	lines map[int]string
+	cols map[int]string
 }
-func (s Screen) Init() [][]string {
-	rows := make(map[int]string, s.lines)
-	//cols := make(map[int]string, s.cols)
-	rows[2] = "frankie"
+func (s Screen) Init() {
+	s.lines = make(map[int]string, s.initLines)
+	s.cols = make(map[int]string, s.initCols)
+}
 
-	fmt.Println(rows[2])
-	return s.win
-}
 
 
 func main() {
@@ -56,19 +53,6 @@ func main() {
 }
 
 
-
-func DetermineScreenSize() (Screen) {
-	//Initilialize the screen
-	var newScreen Screen
-	cols, lines, err := terminal.GetSize(0)
-	if err != nil {
-		panic(err)
-	}
-	newScreen.cols = cols
-	newScreen.lines = lines
-
-	return newScreen
-}
 
 
 func TBA(c *gin.Context) {
