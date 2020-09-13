@@ -16,7 +16,8 @@ type Screen struct {
 
 
 
-
+//An important side effect of getting this to work is that
+//the string variable can be replaced with a custom struct
 func (s Screen) Init() Screen {
 	cols, lines, err := terminal.GetSize(0)
 	if err != nil {
@@ -24,23 +25,35 @@ func (s Screen) Init() Screen {
 	}
 	s.initLines = lines
 	s.initCols = cols
-	s.lines = make(map[int]string, s.initLines)
+	s.lines = make(map[int]map[int]string, s.initLines)
 
-	s.cols = make(map[int]string, s.initCols)
+	s.cols = make(map[int]map[int]string, s.initCols)
 	return s
 }
 
 func (s Screen) Fill(val string) Screen {
+	compiledScreen := make(map[int]map[int]string, s.initLines)
 	for i := 0;i < s.initLines;i++ {
+		compiledScreen = make(map[int]map[int]string, s.initLines)
 		for c:= 0;c < s.initCols;c++ {
 			s.cols[c] = val
+			if c == s.initCols -1 {
+				s.lines[i] += s.cols
+			}
+			//compiledScreen[i] += s.cols[c]
+
 		}
-		s.lines[i] = val
+		//s.lines[i] += compiledScreen
 	}
-	fmt.Println(s)
+
 	return s
 }
 
+
+func (s Screen) EditCell(x int, y int) Screen {
+
+	return s
+}
 
 func main() {
 
