@@ -3,11 +3,22 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/ssh/terminal"
 	"net/http"
 	"time"
 )
+type Screen struct {
+	lines int
+	cols int
+}
+
 
 func main() {
+
+	screen := DetermineWinSize()
+	fmt.Println("These are the screen dimensions")
+	fmt.Println(screen)
+
 	fmt.Println("This will be the server")
 	server := gin.Default()
 	server.GET("/jack-in", RenderIntro)
@@ -29,6 +40,20 @@ func main() {
 		time.Sleep(100*time.Millisecond)
 	}
 }
+
+func DetermineWinSize() (Screen) {
+	//Initilialize the screen
+	var newScreen Screen
+	cols, lines, err := terminal.GetSize(0)
+	if err != nil {
+		panic(err)
+	}
+	newScreen.cols = cols
+	newScreen.lines = lines
+
+	return newScreen
+}
+
 
 func TBA(c *gin.Context) {
 
