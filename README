@@ -10,3 +10,5 @@ will handle the visual ncurses side of things
 The mail server will be a secondary module of the golang area, as that's
 what I'm trying to get back into the groove of
 
+The particular setup I'm using utilizes certbot by the wonderful people at Let's Encrypt.
+certbot certonly and inserting the correct filenames will be a part of automation eventually
