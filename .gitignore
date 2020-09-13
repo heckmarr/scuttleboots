@@ -1,2 +1,3 @@
 scuttleboots
 venv/*
+*.pem
