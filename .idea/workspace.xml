@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e2553c11-c0dd-4e6c-a86a-6eb3ee727c06" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="/usr/lib/go-1.14" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1hRLtGvyjjpWSO2YbNJtQ57VZbw" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="idea.background.editor" value="$USER_HOME$/Pictures/CygnusVeil_Symon_2000.jpg,15,tile,center" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e2553c11-c0dd-4e6c-a86a-6eb3ee727c06" name="Default Changelist" comment="" />
+      <created>1599969173621</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1599969173621</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="655" y="357" width="599" height="362" key="#Notifications" timestamp="1599971193689">
+      <screen x="0" y="339" width="1920" height="715" />
+    </state>
+    <state x="655" y="357" width="599" height="362" key="#Notifications/1920.312.1366.768/0.339.1920.715@0.339.1920.715" timestamp="1599971193689" />
+    <state x="664" y="337" width="582" height="401" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599969573977">
+      <screen x="0" y="339" width="1920" height="715" />
+    </state>
+    <state x="664" y="337" width="582" height="401" key="#com.intellij.fileTypes.FileTypeChooser/1920.312.1366.768/0.339.1920.715@0.339.1920.715" timestamp="1599969573977" />
+    <state x="796" y="393" width="426" height="486" key="FileChooserDialogImpl" timestamp="1599970003508">
+      <screen x="0" y="339" width="1920" height="715" />
+    </state>
+    <state x="796" y="393" width="426" height="486" key="FileChooserDialogImpl/1920.312.1366.768/0.339.1920.715@0.339.1920.715" timestamp="1599970003508" />
+    <state x="449" y="180" key="SettingsEditor" timestamp="1599970879159">
+      <screen x="0" y="339" width="1920" height="715" />
+    </state>
+    <state x="449" y="180" key="SettingsEditor/1920.312.1366.768/0.339.1920.715@0.339.1920.715" timestamp="1599970879159" />
+    <state x="707" y="411" width="614" height="450" key="org.intellij.images.editor.actions.BackgroundImageDialog" timestamp="1599970011379">
+      <screen x="0" y="339" width="1920" height="715" />
+    </state>
+    <state x="707" y="411" width="614" height="450" key="org.intellij.images.editor.actions.BackgroundImageDialog/1920.312.1366.768/0.339.1920.715@0.339.1920.715" timestamp="1599970011379" />
+    <state x="623" y="236" width="672" height="678" key="search.everywhere.popup" timestamp="1599970591410">
+      <screen x="0" y="339" width="1920" height="715" />
+    </state>
+    <state x="623" y="236" width="672" height="678" key="search.everywhere.popup/1920.312.1366.768/0.339.1920.715@0.339.1920.715" timestamp="1599970591410" />
+  </component>
+</project>

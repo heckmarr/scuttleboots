@@ -1,0 +1,11 @@
+This is going to be a mail to bbs/blog that utilizes a few things.
+
+The first is images to ascii, the second is a convoluted thread mechanic.
+
+The third will be a bbs-type system that hosts both local and non local parts.
+
+The serving of webpages will be handled by the gin/gonic engine and python
+will handle the visual ncurses side of things
+
+The mail server will be a secondary module of the golang area, as that's
+what I'm trying to get back into the groove of
