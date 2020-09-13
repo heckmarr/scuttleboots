@@ -9,13 +9,24 @@ import (
 )
 type Screen struct {
 	lines int
-	cols int
+	cols  int
+	win   [][]string
+}
+func (s Screen) Init() [][]string {
+	rows := make(map[int]string, s.lines)
+	//cols := make(map[int]string, s.cols)
+	rows[2] = "frankie"
+
+	fmt.Println(rows[2])
+	return s.win
 }
 
 
 func main() {
 
-	screen := DetermineWinSize()
+	var screen Screen
+	screen.Init()
+	fmt.Println(screen)
 	fmt.Println("These are the screen dimensions")
 	//They work on the current terminal, ie if you're
 	//connected over ssh, you can get the dimensions
@@ -44,7 +55,9 @@ func main() {
 	}
 }
 
-func DetermineWinSize() (Screen) {
+
+
+func DetermineScreenSize() (Screen) {
 	//Initilialize the screen
 	var newScreen Screen
 	cols, lines, err := terminal.GetSize(0)
