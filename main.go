@@ -11,6 +11,7 @@ type Screen struct {
 	initLines int
 	initCols  int
 	Points map[Cell]string
+	Display string
 }
 
 type Cell struct {
@@ -30,10 +31,8 @@ func (s Screen) Init() Screen {
 	l := make(map[Cell]string, cols * lines)
 
 	s.Points = l
-	fmt.Println(s.Points)
 	pos := Cell{1, 1}
-	s.Points[pos] = "Wierdest hello world ever"
-	fmt.Println(s.Points[pos])
+	fmt.Sprintf(s.Points[pos])
 	return s
 }
 
@@ -42,9 +41,9 @@ func (s Screen) Fill(val string) Screen {
 		for c := 0;c < s.initCols;c++ {
 			pos := Cell{c, i}
 			s.Points[pos] = "#"
-			fmt.Println(s.Points[pos])
+			s.Display += fmt.Sprint(s.Points[pos])
 		}
-		fmt.Println("\n")
+		s.Display += fmt.Sprint("\n")
 	}
 	return s
 }
@@ -60,11 +59,9 @@ func main() {
 	screen = screen.Init()
 	screen = screen.Fill("#")
 	fmt.Println("These are the screen dimensions")
-	//They work on the current terminal, ie if you're
+	//Init calculates the size of the current terminal, ie if you're
 	//connected over ssh, you can get the dimensions
 	//of the screen you're currently looking at
-	fmt.Println(screen)
-	//fmt.Println(screen.lines[Cell{1, 1}])
 	fmt.Println("This will be the server")
 	server := gin.Default()
 	server.GET("/jack-in", RenderIntro)
@@ -80,7 +77,7 @@ func main() {
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
-
+	fmt.Printf(screen.Display)
 	s.ListenAndServeTLS("fullchain.pem", "privkey.pem")
 	for {
 		time.Sleep(100*time.Millisecond)
