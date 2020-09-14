@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/ssh/terminal"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 )
 type Screen struct {
@@ -18,6 +20,7 @@ type Screen struct {
 type Cell struct {
 	X int
 	Y int
+	Value string
 }
 
 //An important side effect of getting this to work is that
@@ -40,7 +43,7 @@ func (s Screen) Init() Screen {
 func (s Screen) Fill(val string) Screen {
 	for i := 0;i < s.initLines;i++ {
 		for c := 0;c < s.initCols;c++ {
-			pos := Cell{c, i}
+			pos := Cell{c, i, "boot"}
 			s.Points[pos] = "#"
 			s.Display += fmt.Sprint(s.Points[pos])
 		}
@@ -48,12 +51,38 @@ func (s Screen) Fill(val string) Screen {
 	}
 	return s
 }
-/*
-func (s Screen) EditCell(x int, y int, val string) Screen {
-	s.lines[y][:x]  val s.lines[y][x:]
+
+func (s Screen) EditCell() Screen {
+	var Print Cell
+	skan := bufio.NewScanner(os.Stdin)
+
+	fmt.Printf("Enter the X coodinate that you wish to change")
+	skan.Scan()
+	val, err := strconv.Atoi(skan.Text())
+	if err == nil {
+		if val < s.initCols {
+			fmt.Println("Passes all tests")
+			Print.X = val
+		}
+	}
+
+	fmt.Printf("Enter the Y coordinate that you wish to change")
+	skan.Scan()
+	val, err = strconv.Atoi(skan.Text())
+	if err == nil {
+		if val < s.initLines {
+			fmt.Println("Passes all tests")
+			Print.Y = val
+		}
+	}
+
+	//This is kinda dumb and will change with create rectangle, triangle, hyperlink etc
+	fmt.Println("Now enter your message")
+	skan.Scan()
+	Print.Value = skan.Text()
 	return s
 }
-*/
+
 func main() {
 
 	fmt.Println("This will be the server")
