@@ -87,6 +87,8 @@ func (s Screen) EditCell() Screen {
 	fmt.Println("Now enter your message")
 	skan.Scan()
 	Print.Value = skan.Text()
+
+
 	return s
 }
 
@@ -123,6 +125,13 @@ func main() {
 		fmt.Print(prompt.Prompt)
 		box.Scan()
 		//remember to bluemonday this shit
+		if box.Text() == "quit" || box.Text() == "exit" {
+			os.Exit(1)
+		}
+		if box.Text() == "zergling" {
+			scr.EditCell()
+			continue
+		}
 		prompt.Value = box.Text()
 		fmt.Printf(prompt.Value)
 
