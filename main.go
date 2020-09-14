@@ -32,8 +32,8 @@ func (s Screen) Init() Screen {
 	l := make(map[Cell]string, cols * lines)
 
 	s.Points = l
-	pos := Cell{1, 1}
-	fmt.Sprintf(s.Points[pos])
+
+	s.Display = fmt.Sprintf("\033[0:0H")
 	return s
 }
 
@@ -56,13 +56,6 @@ func (s Screen) EditCell(x int, y int, val string) Screen {
 */
 func main() {
 
-	var screen Screen
-	screen = screen.Init()
-	screen = screen.Fill("#")
-	fmt.Println("These are the screen dimensions")
-	//Init calculates the size of the current terminal, ie if you're
-	//connected over ssh, you can get the dimensions
-	//of the screen you're currently looking at
 	fmt.Println("This will be the server")
 	server := gin.Default()
 	server.GET("/jack-in", RenderIntro)
@@ -78,17 +71,32 @@ func main() {
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
-	//DEBUG mostly
-	fmt.Printf(screen.Display)
-	//END DEBUG
+
 	s.ListenAndServeTLS("fullchain.pem", "privkey.pem")
+	//This ends server stuff and starts display stuff
+
+	//The following is all code needed to make a square the size of the terminal
+	var scr Screen
+	scr = scr.SpawnScreen()
+	fmt.Print(scr.Display)
+
+
 	for {
 		time.Sleep(100*time.Millisecond)
 	}
 }
 
+func (s Screen) SpawnScreen() Screen {
 
-
+	var screen Screen
+	screen = screen.Init()
+	screen = screen.Fill("#")
+	fmt.Println("These are the screen dimensions")
+	//Init calculates the size of the current terminal, ie if you're
+	//connected over ssh, you can get the dimensions
+	//of the screen you're currently looking at
+	return screen
+}
 
 func TBA(c *gin.Context) {
 
@@ -98,6 +106,8 @@ func AlertRend(c *gin.Context) {
 	_, err := os.Stat(".blit")
 	if err == nil {
 		fmt.Println("File exists, continue with blitting.")
+		//Remembering that ddos attacks exists
+		//And that to ustilize gin, we need to pass a value
 	}else {
 		file, err := os.Create(".blit")
 		if err != nil {
@@ -132,6 +142,7 @@ func AlertRend(c *gin.Context) {
 		if err == nil {
 			os.Remove(".proc")
 		}
+
 	}
 
 
@@ -145,6 +156,10 @@ func AlertRend(c *gin.Context) {
 
 	//the tokens will probably yaml, unless toml
 	//or json are more viable
+
+}
+
+func Render(s Screen) {
 
 }
 
