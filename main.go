@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/ssh/terminal"
 	"net/http"
+	"os"
 	"time"
 )
 type Screen struct {
@@ -77,7 +78,9 @@ func main() {
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
+	//DEBUG mostly
 	fmt.Printf(screen.Display)
+	//END DEBUG
 	s.ListenAndServeTLS("fullchain.pem", "privkey.pem")
 	for {
 		time.Sleep(100*time.Millisecond)
@@ -92,19 +95,55 @@ func TBA(c *gin.Context) {
 }
 
 func AlertRend(c *gin.Context) {
+	_, err := os.Stat(".blit")
+	if err == nil {
+		fmt.Println("File exists, continue with blitting.")
+	}else {
+		file, err := os.Create(".blit")
+		if err != nil {
+			panic(err)
+		}
+		defer file.Close()
+	}
+
 	//This will spawn a file that
-	//indicates to the python front end
+	//indicates to the front end
 	//That it needs to update the screen
 	//
+	_, err = os.Stat(".proc")
+	if err == nil {
+		fmt.Println("Processing is in progress")
+	}else {
+		file, err := os.Create(".proc")
+		if err != nil {
+			panic(err)
+		}
+		defer file.Close()
+		//This is where the main logic of compiling the "View"
+		//will go
+
+		//WHEN COMPLETE//
+		//Clean all tokens
+		_, err = os.Stat(".blit")
+		if err == nil {
+			os.Remove(".blit")
+		}
+		_, err = os.Stat(".proc")
+		if err == nil {
+			os.Remove(".proc")
+		}
+	}
+
+
 	//When that happens the alert token
 	//will be briefly replaced with a
 	//"processing" bit
 	//
-	//Then, once the python has drawn all
+	//Then, once the mechanism has drawn all
 	//requested, a final token is created
-	//and the golang displays it
+	//and the server serves it it
 
-	//the tokens will probaly yaml, unless toml
+	//the tokens will probably yaml, unless toml
 	//or json are more viable
 
 }
