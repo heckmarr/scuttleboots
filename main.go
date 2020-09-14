@@ -10,11 +10,13 @@ import (
 type Screen struct {
 	initLines int
 	initCols  int
-	lines map[int]string
-	cols map[int]string
+	Points map[Cell]string
 }
 
-
+type Cell struct {
+	X int
+	Y int
+}
 
 //An important side effect of getting this to work is that
 //the string variable can be replaced with a custom struct
@@ -25,45 +27,48 @@ func (s Screen) Init() Screen {
 	}
 	s.initLines = lines
 	s.initCols = cols
-	s.lines = make(map[int]string, s.initLines)
+	l := make(map[Cell]string, cols * lines)
 
-	s.cols = make(map[int]string, s.initCols)
+	s.Points = l
+	fmt.Println(s.Points)
+	pos := Cell{1, 1}
+	s.Points[pos] = "Wierdest hello world ever"
+	fmt.Println(s.Points[pos])
 	return s
 }
-
+/*
 func (s Screen) Fill(val string) Screen {
 
-	for i := 0;i < s.initLines;i++ {
-
-		for c:= 0;c < s.initCols;c++ {
-			s.cols[c] = val
-
-			s.lines[i] += s.cols[c]
-
-
+	for key, value := range s.lines {
+		for _, _ = range s.cols {
+			fmt.Println(value)
+			s.lines[key] = '#'
+			fmt.Println(value)
 		}
+		cell := Cell{1, 1}
+		fmt.Println(cell)
+		fmt.Println(s)
+		s.cols[Cell{1, 1}] = '$'
 	}
-
+	return s
+}*/
+/*
+func (s Screen) EditCell(x int, y int, val string) Screen {
+	s.lines[y][:x]  val s.lines[y][x:]
 	return s
 }
-
-
-func (s Screen) EditCell(x int, y int) Screen {
-
-	return s
-}
-
+*/
 func main() {
 
 	var screen Screen
 	screen = screen.Init()
-	screen = screen.Fill("#")
+	//screen = screen.Fill("#")
 	fmt.Println("These are the screen dimensions")
 	//They work on the current terminal, ie if you're
 	//connected over ssh, you can get the dimensions
 	//of the screen you're currently looking at
 	fmt.Println(screen)
-
+	//fmt.Println(screen.lines[Cell{1, 1}])
 	fmt.Println("This will be the server")
 	server := gin.Default()
 	server.GET("/jack-in", RenderIntro)
