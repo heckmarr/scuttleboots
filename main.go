@@ -36,22 +36,18 @@ func (s Screen) Init() Screen {
 	fmt.Println(s.Points[pos])
 	return s
 }
-/*
-func (s Screen) Fill(val string) Screen {
 
-	for key, value := range s.lines {
-		for _, _ = range s.cols {
-			fmt.Println(value)
-			s.lines[key] = '#'
-			fmt.Println(value)
+func (s Screen) Fill(val string) Screen {
+	for i := 0;i < s.initLines;i++ {
+		for c := 0;c < s.initCols;c++ {
+			pos := Cell{c, i}
+			s.Points[pos] = "#"
+			fmt.Println(s.Points[pos])
 		}
-		cell := Cell{1, 1}
-		fmt.Println(cell)
-		fmt.Println(s)
-		s.cols[Cell{1, 1}] = '$'
+		fmt.Println("\n")
 	}
 	return s
-}*/
+}
 /*
 func (s Screen) EditCell(x int, y int, val string) Screen {
 	s.lines[y][:x]  val s.lines[y][x:]
@@ -62,7 +58,7 @@ func main() {
 
 	var screen Screen
 	screen = screen.Init()
-	//screen = screen.Fill("#")
+	screen = screen.Fill("#")
 	fmt.Println("These are the screen dimensions")
 	//They work on the current terminal, ie if you're
 	//connected over ssh, you can get the dimensions
