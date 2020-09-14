@@ -63,41 +63,42 @@ func (s Screen) EditCell() Screen {
 	var Print Cell
 	skan := bufio.NewScanner(os.Stdin)
 
-	fmt.Printf("Enter the X coodinate that you wish to change")
+	fmt.Printf("\x1b[38:2:50:100:25mEnter the X coodinate that you wish to change\x1b[0m")
 	skan.Scan()
 	val, err := strconv.Atoi(skan.Text())
 	if err == nil {
 		if val < s.initCols {
-			fmt.Println("Passes all tests")
+			//fmt.Println("Passes all tests")
 			Print.X = val
 		}
 	}
 
-	fmt.Printf("Enter the Y coordinate that you wish to change")
+	fmt.Printf("\x1b[38:2:50:100:25mEnter the Y coordinate that you wish to change\x1b[0m")
 	skan.Scan()
 	val, err = strconv.Atoi(skan.Text())
 	if err == nil {
 		if val < s.initLines {
-			fmt.Println("Passes all tests")
+			//fmt.Println("Passes all tests")
 			Print.Y = val
 		}
 	}
 
 	//This is kinda dumb and will change with create rectangle, triangle, hyperlink etc
-	fmt.Println("Now enter your message")
+	fmt.Println("\x1b[38:2:55:100:25mNow enter your message\x1b[0m")
 	skan.Scan()
 	var prompt Input
-	prompt.Prompt = fmt.Sprint("\033[0:0H\033[38:2:200:100:50m<<<<-[\033[0m")
+	prompt.Prompt = fmt.Sprint("\x1b[0:0H\x1b[38:2:200:100:50m<<<<-[")
 
-	Print.Value = fmt.Sprint("\033["+Print.Y+":"+Print.X+"H"+skan.Text()+prompt.Prompt)
-
+	Print.Value = fmt.Sprint("\x1b["+strconv.Itoa(Print.Y)+";"+strconv.Itoa(Print.X)+"H\x1b[38:2:0:200:0m"+skan.Text())
+	fmt.Printf(prompt.Prompt)
+	fmt.Printf(Print.Value)
 
 	return s
 }
 
 func main() {
 	var prompt Input
-	prompt.Prompt = fmt.Sprint("\033[0:0H\033[38:2:200:100:50m<<<<-[\033[0m")
+	prompt.Prompt = fmt.Sprint("\x1b[0:0H\x1b[38:2:200:175:50m<<<<-[")
 	fmt.Println("This will be the server")
 	server := gin.Default()
 	server.GET("/jack-in", RenderIntro)
@@ -125,14 +126,17 @@ func main() {
 	box := bufio.NewScanner(os.Stdin)
 
 	for {
-		fmt.Print(prompt.Prompt)
+		fmt.Printf(scr.Display)
+		fmt.Printf(prompt.Prompt)
 		box.Scan()
 		//remember to bluemonday this shit
 		if box.Text() == "quit" || box.Text() == "exit" {
 			os.Exit(1)
 		}
-		if box.Text() == "zergling" {
+		if box.Text() == "zealot" {
 			scr.EditCell()
+			fmt.Printf("\x1b[0m")
+			box.Scan()
 			continue
 		}
 		prompt.Value = box.Text()
