@@ -86,7 +86,10 @@ func (s Screen) EditCell() Screen {
 	//This is kinda dumb and will change with create rectangle, triangle, hyperlink etc
 	fmt.Println("Now enter your message")
 	skan.Scan()
-	Print.Value = skan.Text()
+	var prompt Input
+	prompt.Prompt = fmt.Sprint("\033[0:0H\033[38:2:200:100:50m<<<<-[\033[0m")
+
+	Print.Value = fmt.Sprint("\033["+Print.Y+":"+Print.X+"H"+skan.Text()+prompt.Prompt)
 
 
 	return s
@@ -94,7 +97,7 @@ func (s Screen) EditCell() Screen {
 
 func main() {
 	var prompt Input
-	prompt.Prompt = fmt.Sprint("\033[0:0H\033[38:2:150:100:50m<<<<-[\033[0m")
+	prompt.Prompt = fmt.Sprint("\033[0:0H\033[38:2:200:100:50m<<<<-[\033[0m")
 	fmt.Println("This will be the server")
 	server := gin.Default()
 	server.GET("/jack-in", RenderIntro)
