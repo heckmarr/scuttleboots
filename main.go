@@ -17,11 +17,18 @@ type Screen struct {
 	Display string
 }
 
+type Input struct {
+	Value string
+	Prompt string
+}
+
 type Cell struct {
 	X int
 	Y int
 	Value string
 }
+
+
 
 //An important side effect of getting this to work is that
 //the string variable can be replaced with a custom struct
@@ -84,7 +91,8 @@ func (s Screen) EditCell() Screen {
 }
 
 func main() {
-
+	var prompt Input
+	prompt.Prompt = fmt.Sprint("\033[0:0H\033[38:2:150:100:50m<<<<-[\033[0m")
 	fmt.Println("This will be the server")
 	server := gin.Default()
 	server.GET("/jack-in", RenderIntro)
@@ -109,8 +117,15 @@ func main() {
 	scr = scr.SpawnScreen()
 	fmt.Print(scr.Display)
 
+	box := bufio.NewScanner(os.Stdin)
 
 	for {
+		fmt.Print(prompt.Prompt)
+		box.Scan()
+		//remember to bluemonday this shit
+		prompt.Value = box.Text()
+		fmt.Printf(prompt.Value)
+
 		time.Sleep(100*time.Millisecond)
 	}
 }
