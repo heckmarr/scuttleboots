@@ -263,12 +263,18 @@ func RenderIntro(c *gin.Context) {
 		panic(err)
 	}
 
+
 	//total := make([]string, cols * lines)
-	for i := 0; i < (cols * lines); i++ {
-		DoRender()
+	for i := 0; i < (cols); i++ {
+
+		for c := 0;c < lines;c++ {
+			go DoRender(i, c)
+		}
+
+
 	}
 }
-func DoRender() {
+func DoRender(x int, y int) {
 
 	cols, _, err := terminal.GetSize(0)
 	if err != nil {
@@ -281,7 +287,8 @@ func DoRender() {
 			var currentCell changingCell
 			currentCell.series = values
 			currentCell.progress = 0
-
+			currentCell.X = x
+			currentCell.Y = y
 			/*
 				var s Screen
 				s = s.Init()
@@ -289,7 +296,7 @@ func DoRender() {
 			*/
 			for {
 				column := rand.Intn(cols)
-				if currentCell.progress == len(currentCell.series) {
+				if currentCell.progress == len(currentCell.series)-1 {
 					finished[column] = true
 					/*	for i := 0; i < len(finished); i++ {
 						if !finished[column] {
@@ -300,8 +307,14 @@ func DoRender() {
 					}*/
 				}
 				if !started[column] {
-					fmt.Println("HAVE WE STARTED")
+					//fmt.Println("HAVE WE STARTED")
 					//Do the thing
+					if currentCell.progress >= 9 {
+						finished[column] = true
+					}
+					if finished[column] == true {
+						break
+					}
 					val := fmt.Sprint("\033[" + strconv.Itoa(currentCell.Y) + ";" + strconv.Itoa(currentCell.X) + "H" + currentCell.series[currentCell.progress])
 					currentCell.progress++
 					fmt.Printf(val)
@@ -310,11 +323,11 @@ func DoRender() {
 				} else {
 					//pick a new one
 					//Continue gracefully exits and restarts the loop
-					//continue
+					continue
 				}
+				time.Sleep(250*time.Millisecond)
 			}
 
-		time.Sleep(100*time.Millisecond)
 }
 
 
