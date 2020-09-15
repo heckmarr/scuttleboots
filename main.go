@@ -264,24 +264,37 @@ func RenderIntro(c *gin.Context) {
 	}
 	finished := make([]bool, cols)
 	started := make([]bool, cols)
+	//total := make([]string, cols * lines)
 	for i := 0;i < (cols * lines);i++ {
 
 		cells := "^,&,*,<,>,$,#,@,!"
-		values := strings.Split("^,&,*,<,>,$,#,@,!", ",")
+		values := strings.Split(cells, ",")
 		var currentCell changingCell
 		currentCell.series = values
-		currentCell.progress = len("^,&,*,<,>,$,#,@,!")
+		currentCell.progress = 0
 
 
 
 		var s Screen
 		s = s.Init()
+		s = s.Fill(" ")
 
 		column := rand.Intn(cols)
+		if currentCell.progress == len(currentCell.series) {
+			finished[column] = true
+			for i := 0; i < len(finished); i++ {
+				if !finished[column] {
+					continue
+				} else {
+					break
+				}
+			}
+		}
 		if !started[column] {
 			//Do the thing
-
-
+			val := fmt.Sprint("\033["+strconv.Itoa(currentCell.Y)+""+strconv.Itoa(currentCell.X)+"H"+currentCell.series[currentCell.progress])
+			currentCell.progress++
+			fmt.Printf(val)
 			//Then mark that it has been done
 			started[column] = true
 		}else {
