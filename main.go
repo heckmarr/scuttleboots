@@ -74,6 +74,7 @@ func (s Screen) CreateShape() Screen {
 	//This will just require an X and Y
 	//dimensions as well as a position
 	//on screen
+	return s
 }
 
 func (s Screen) EditCell() Screen {
@@ -120,7 +121,8 @@ func main() {
 	server := gin.Default()
 	server.GET("/jack-in", RenderIntro)
 	server.GET("/jack-out", TBA)
-	server.GET("/observer", AlertRend)
+
+	server.POST("/observer", AlertRend)
 	server.POST("/")
 
 
@@ -245,5 +247,6 @@ func RenderIntro(c *gin.Context) {
 	//Put call to python3 crunching here
 	c.String(http.StatusOK, "Whale oil beef hook")
 	//Put golang serving said silliness here.
+	series := "^,&,*,<,>,$,#,@,!"
 
 }

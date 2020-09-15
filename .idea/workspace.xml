@@ -14,7 +14,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e2553c11-c0dd-4e6c-a86a-6eb3ee727c06" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/missive.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sync.sh" beforeDir="false" afterPath="$PROJECT_DIR$/sync.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +27,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Go File" />
         <option value="Python Script" />
+        <option value="Go File" />
       </list>
     </option>
   </component>
@@ -85,10 +88,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="655" y="357" width="599" height="362" key="#Notifications" timestamp="1600130896033">
+    <state x="655" y="357" width="599" height="362" key="#Notifications" timestamp="1600131126964">
       <screen x="0" y="339" width="1920" height="715" />
     </state>
-    <state x="655" y="357" width="599" height="362" key="#Notifications/1920.312.1366.768/0.339.1920.715@0.339.1920.715" timestamp="1600130896033" />
+    <state x="655" y="357" width="599" height="362" key="#Notifications/1920.312.1366.768/0.339.1920.715@0.339.1920.715" timestamp="1600131126964" />
     <state x="664" y="337" width="582" height="401" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599969573977">
       <screen x="0" y="339" width="1920" height="715" />
     </state>
