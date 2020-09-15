@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/ssh/terminal"
+	"math/rand"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 type Screen struct {
@@ -62,7 +64,7 @@ func (s Screen) Fill(val string) Screen {
 	for i := 0;i < s.initLines;i++ {
 		for c := 0;c < s.initCols;c++ {
 			pos := Cell{c, i, "boot"}
-			s.Points[pos] = "#"
+			s.Points[pos] = " "
 			s.Display += fmt.Sprint(s.Points[pos])
 		}
 		s.Display += fmt.Sprint("\n")
@@ -112,6 +114,10 @@ func (s Screen) EditCell() Screen {
 	fmt.Printf(Print.Value)
 
 	return s
+}
+
+func (s Screen) FlipCell(val Cell) {
+
 }
 
 func main() {
@@ -241,12 +247,51 @@ func AlertRend(c *gin.Context) {
 func Render(s Screen) {
 
 }
-
+type changingCell struct {
+	series []string
+	progress int
+	X int
+	Y int
+}
 
 func RenderIntro(c *gin.Context) {
 	//Put call to python3 crunching here
 	c.String(http.StatusOK, "Whale oil beef hook")
 	//Put golang serving said silliness here.
-	series := "^,&,*,<,>,$,#,@,!"
+	cols, lines, err := terminal.GetSize(0)
+	if err != nil {
+		panic(err)
+	}
+	finished := make([]bool, cols)
+	started := make([]bool, cols)
+	for i := 0;i < (cols * lines);i++ {
+
+		cells := "^,&,*,<,>,$,#,@,!"
+		values := strings.Split("^,&,*,<,>,$,#,@,!", ",")
+		var currentCell changingCell
+		currentCell.series = values
+		currentCell.progress = len("^,&,*,<,>,$,#,@,!")
+
+
+
+		var s Screen
+		s = s.Init()
+
+		column := rand.Intn(cols)
+		if !started[column] {
+			//Do the thing
+
+
+			//Then mark that it has been done
+			started[column] = true
+		}else {
+			//pick a new one
+			//Continue gracefully exits and restarts the loop
+			continue
+		}
+		time.Sleep(100*time.Millisecond)
+
+
+	}
 
 }
