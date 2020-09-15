@@ -140,7 +140,7 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	s.ListenAndServeTLS("fullchain.pem", "privkey.pem")
+	go s.ListenAndServeTLS("fullchain.pem", "privkey.pem")
 	//This ends server stuff and starts display stuff
 
 	//The following is all code needed to make a square the size of the terminal
@@ -262,49 +262,62 @@ func RenderIntro(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
+
+	//total := make([]string, cols * lines)
+	for i := 0; i < (cols * lines); i++ {
+		DoRender()
+	}
+}
+func DoRender() {
+
+	cols, _, err := terminal.GetSize(0)
+	if err != nil {
+		panic(err)
+	}
 	finished := make([]bool, cols)
 	started := make([]bool, cols)
-	//total := make([]string, cols * lines)
-	for i := 0;i < (cols * lines);i++ {
+			cells := "^,&,*,<,>,$,#,@,!"
+			values := strings.Split(cells, ",")
+			var currentCell changingCell
+			currentCell.series = values
+			currentCell.progress = 0
 
-		cells := "^,&,*,<,>,$,#,@,!"
-		values := strings.Split(cells, ",")
-		var currentCell changingCell
-		currentCell.series = values
-		currentCell.progress = 0
-
-
-
-		var s Screen
-		s = s.Init()
-		s = s.Fill(" ")
-
-		column := rand.Intn(cols)
-		if currentCell.progress == len(currentCell.series) {
-			finished[column] = true
-			for i := 0; i < len(finished); i++ {
-				if !finished[column] {
-					continue
+			/*
+				var s Screen
+				s = s.Init()
+				s = s.Fill(" ")
+			*/
+			for {
+				column := rand.Intn(cols)
+				if currentCell.progress == len(currentCell.series) {
+					finished[column] = true
+					/*	for i := 0; i < len(finished); i++ {
+						if !finished[column] {
+							continue
+						} else {
+							break
+						}
+					}*/
+				}
+				if !started[column] {
+					fmt.Println("HAVE WE STARTED")
+					//Do the thing
+					val := fmt.Sprint("\033[" + strconv.Itoa(currentCell.Y) + ";" + strconv.Itoa(currentCell.X) + "H" + currentCell.series[currentCell.progress])
+					currentCell.progress++
+					fmt.Printf(val)
+					//Then mark that it has been done
+					started[column] = true
 				} else {
-					break
+					//pick a new one
+					//Continue gracefully exits and restarts the loop
+					//continue
 				}
 			}
-		}
-		if !started[column] {
-			//Do the thing
-			val := fmt.Sprint("\033["+strconv.Itoa(currentCell.Y)+""+strconv.Itoa(currentCell.X)+"H"+currentCell.series[currentCell.progress])
-			currentCell.progress++
-			fmt.Printf(val)
-			//Then mark that it has been done
-			started[column] = true
-		}else {
-			//pick a new one
-			//Continue gracefully exits and restarts the loop
-			continue
-		}
+
 		time.Sleep(100*time.Millisecond)
-
-
-	}
-
 }
+
+
+
+
+
