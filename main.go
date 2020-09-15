@@ -268,15 +268,15 @@ func RenderIntro(c *gin.Context) {
 	for i := 0; i < (cols); i++ {
 
 		for c := 0;c < lines;c++ {
-			go DoRender(i, c)
+			go DoRender()
 		}
 
 
 	}
 }
-func DoRender(x int, y int) {
+func DoRender() {
 
-	cols, _, err := terminal.GetSize(0)
+	cols, lines, err := terminal.GetSize(0)
 	if err != nil {
 		panic(err)
 	}
@@ -287,8 +287,11 @@ func DoRender(x int, y int) {
 			var currentCell changingCell
 			currentCell.series = values
 			currentCell.progress = 0
-			currentCell.X = x
-			currentCell.Y = y
+			currentCell.X = rand.Intn(cols)
+			currentCell.Y = rand.Intn(lines)
+
+
+
 			/*
 				var s Screen
 				s = s.Init()
@@ -309,7 +312,7 @@ func DoRender(x int, y int) {
 				if !started[column] {
 					//fmt.Println("HAVE WE STARTED")
 					//Do the thing
-					if currentCell.progress >= 9 {
+					if currentCell.progress > 10 {
 						finished[column] = true
 					}
 					if finished[column] == true {
