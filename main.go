@@ -17,6 +17,15 @@ type Screen struct {
 	Display string
 }
 
+type Missive struct {
+	Header string
+	Body string
+	Footer string
+	Recipient string
+	Encrypted bool
+
+}
+
 type Input struct {
 	Value string
 	Prompt string
@@ -57,6 +66,12 @@ func (s Screen) Fill(val string) Screen {
 		s.Display += fmt.Sprint("\n")
 	}
 	return s
+}
+
+func (s Screen) CreateShape() Screen {
+	//This will just require an X and Y
+	//dimensions as well as a position
+	//on screen
 }
 
 func (s Screen) EditCell() Screen {
