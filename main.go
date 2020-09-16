@@ -291,7 +291,7 @@ func DoRender() {
 	}
 	finished := make([]bool, cols)
 	started := make([]bool, cols)
-			cells := "^,&,*,<,>,$,#,@,!"
+			cells := "^,&,*,<,>,$,#,+,!"
 			values := strings.Split(cells, ",")
 			var currentCell changingCell
 			currentCell.series = values
@@ -337,7 +337,7 @@ func DoRender() {
 					//Continue gracefully exits and restarts the loop
 					continue
 				}
-				time.Sleep(250*time.Millisecond)
+				time.Sleep(20*time.Millisecond)
 			}
 
 }
