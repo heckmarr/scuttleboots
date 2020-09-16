@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/ssh/terminal"
+	"io"
 	"math/rand"
 	"net/http"
 	"os"
@@ -124,7 +125,14 @@ func main() {
 	var prompt Input
 	prompt.Prompt = fmt.Sprint("\x1b[0:0H\x1b[38:2:200:175:50m<<<<-[")
 	fmt.Println("This will be the server")
+	file, err := os.Create("gin.log")
+	if err != nil {
+		panic(err)
+	}
+	gin.DefaultWriter = io.MultiWriter(file)
 	server := gin.Default()
+
+
 	server.GET("/jack-in", RenderIntro)
 	server.GET("/jack-out", TBA)
 
@@ -275,6 +283,7 @@ func RenderIntro(c *gin.Context) {
 	}
 }
 func DoRender() {
+
 
 	cols, lines, err := terminal.GetSize(0)
 	if err != nil {
