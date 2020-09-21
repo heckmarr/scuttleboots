@@ -98,11 +98,9 @@ func (s Screen) Scramble() Screen {
 			Print.Value = fmt.Sprint("\x1b["+strconv.Itoa(Print.Y)+";"+strconv.Itoa(Print.X)+"H\x1b[38:2:0:200:0m"+value)
 
 			fmt.Printf(Print.Value)
-
+			time.Sleep(20*time.Millisecond)
 		}
 	}
-
-	fmt.Printf(Print.Value)
 
 	return s
 }
@@ -159,6 +157,7 @@ func main() {
 	server := gin.Default()
 
 
+//	server.GET("/dial-in", Scramble)
 	server.GET("/jack-in", RenderIntro)
 	server.GET("/jack-out", TBA)
 
@@ -216,7 +215,7 @@ func (s Screen) SpawnScreen() Screen {
 
 	var screen Screen
 	screen = screen.Init()
-	screen = screen.Fill("#")
+	//screen = screen.Fill("#")
 	fmt.Println("These are the screen dimensions")
 	//Init calculates the size of the current terminal, ie if you're
 	//connected over ssh, you can get the dimensions
