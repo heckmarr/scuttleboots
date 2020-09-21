@@ -65,8 +65,12 @@ func (s Screen) Fill(val string) Screen {
 	for i := 0;i < s.initLines;i++ {
 		for c := 0;c < s.initCols;c++ {
 			pos := Cell{c, i, "boot"}
-			s.Points[pos] = " "
-			s.Display += fmt.Sprint(s.Points[pos])
+			lines := " ,.,0,4,%,^,&"
+			//line := strings.Split(lines, ",")
+			//s.Points[rand.Intn(pos.Y)]
+			v := lines[rand.Intn(c)]
+			pos.Value = string(v)
+			s.Display += fmt.Sprint(v)
 		}
 		s.Display += fmt.Sprint("\n")
 	}
@@ -80,6 +84,28 @@ func (s Screen) CreateShape() Screen {
 	return s
 }
 
+func (s Screen) Scramble() Screen {
+	var Print Cell
+
+	lines := " ,.,0,4,%,^,&"
+	line := strings.Split(lines, ",")
+	//val := strings.Split(lines, ",")
+	for c := 0;c < s.initCols;c++ {
+		for l := 0;l < s.initLines;l++ {
+			Print.Y = rand.Intn(l)
+			Print.X = rand.Intn(c)
+			value := line[rand.Intn(Print.Y)]
+			Print.Value = fmt.Sprint("\x1b["+strconv.Itoa(Print.Y)+";"+strconv.Itoa(Print.X)+"H\x1b[38:2:0:200:0m"+value)
+
+			fmt.Printf(Print.Value)
+
+		}
+	}
+
+	fmt.Printf(Print.Value)
+
+	return s
+}
 func (s Screen) EditCell() Screen {
 	var Print Cell
 	skan := bufio.NewScanner(os.Stdin)
@@ -171,6 +197,13 @@ func main() {
 			fmt.Printf("\x1b[0m")
 			box.Scan()
 			continue
+		}
+		if box.Text() == "login" {
+			for c := 0;c < scr.initCols;c++ {
+				for r := 0;r < scr.initLines;r++ {
+					scr.Scramble()
+				}
+			}
 		}
 		prompt.Value = box.Text()
 		fmt.Printf(prompt.Value)

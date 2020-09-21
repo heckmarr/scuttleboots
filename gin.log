@@ -1,0 +1,10 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /jack-in                  --> main.RenderIntro (3 handlers)
+[GIN-debug] GET    /jack-out                 --> main.TBA (3 handlers)
+[GIN-debug] POST   /observer                 --> main.AlertRend (3 handlers)
+[GIN-debug] POST   /                         --> github.com/gin-gonic/gin.RecoveryWithWriter.func1 (2 handlers)
