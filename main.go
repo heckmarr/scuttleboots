@@ -68,7 +68,7 @@ func (s Screen) Fill(val string) Screen {
 			lines := " ,.,0,4,%,^,&"
 			//line := strings.Split(lines, ",")
 			//s.Points[rand.Intn(pos.Y)]
-			v := lines[rand.Intn(c)]
+			v := lines[rand.Intn(len(lines))]
 			pos.Value = string(v)
 			s.Display += fmt.Sprint(v)
 		}
