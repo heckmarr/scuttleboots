@@ -92,10 +92,17 @@ func (s Screen) Scramble() Screen {
 	//val := strings.Split(lines, ",")
 	for c := 0;c < s.initCols;c++ {
 		for l := 0;l < s.initLines;l++ {
-			Print.Y = rand.Intn(l)
-			Print.X = rand.Intn(c)
-			value := line[rand.Intn(Print.Y)]
-			Print.Value = fmt.Sprint("\x1b["+strconv.Itoa(Print.Y)+";"+strconv.Itoa(Print.X)+"H\x1b[38:2:0:200:0m"+value)
+			if c != 0 {
+				Print.Y = rand.Intn(c)
+				Print.X = rand.Intn(c)
+			}else {
+				Print.Y = 0
+				Print.X = 0
+			}
+			if Print.Y < len(line) {
+				value := line[Print.Y]
+				Print.Value = fmt.Sprint("\x1b["+strconv.Itoa(Print.Y)+";"+strconv.Itoa(Print.X)+"H\x1b[38:2:0:200:0m"+value)
+			}
 
 			fmt.Printf(Print.Value)
 			time.Sleep(1*time.Millisecond)
@@ -104,6 +111,23 @@ func (s Screen) Scramble() Screen {
 
 	return s
 }
+func SendMissive(c *gin.Context) {
+	var miss Missive
+	miss.Header = "INCOMING"
+	miss.Footer = "EOF"
+	skan := bufio.NewScanner(os.Stdin)
+	fmt.Print("\033[1;0H\033[38:2:0:200:0mEnter message\033[0m")
+	skan.Scan()
+
+	miss.Body = skan.Text()
+	miss.Encrypted = false
+	fmt.Println("\033[2;0H\033[38:2:100:0:100mEnter Recipient\033[0m")
+	skan.Scan()
+	miss.Recipient = skan.Text()
+	fmt.Println(miss)
+	c.Writer.WriteString(miss.Body)
+}
+
 func (s Screen) EditCell() Screen {
 	var Print Cell
 	skan := bufio.NewScanner(os.Stdin)
@@ -161,8 +185,8 @@ func main() {
 	server.GET("/jack-in", RenderIntro)
 	server.GET("/jack-out", TBA)
 
-	server.POST("/observer", AlertRend)
-	server.POST("/")
+	server.GET("/observer", AlertRend)
+	server.GET("/send", SendMissive)
 
 
 	s := &http.Server{
@@ -198,11 +222,7 @@ func main() {
 			continue
 		}
 		if box.Text() == "login" {
-			for c := 0;c < scr.initCols;c++ {
-				for r := 0;r < scr.initLines;r++ {
-					scr.Scramble()
-				}
-			}
+				scr.Scramble()
 		}
 		prompt.Value = box.Text()
 		fmt.Printf(prompt.Value)
@@ -248,6 +268,7 @@ func AlertRend(c *gin.Context) {
 	_, err = os.Stat(".proc")
 	if err == nil {
 		fmt.Println("Processing is in progress")
+		fmt.Println("\033[38:2:200:0:0mERROR\033[0m")
 	}else {
 		file, err := os.Create(".proc")
 		if err != nil {
@@ -364,7 +385,9 @@ func DoRender() {
 					fmt.Printf(val)
 					//Then mark that it has been done
 					started[column] = true
-				} else {
+				} else if currentCell.progress >= 100 {
+					finished[column] = true
+				}else {
 					//pick a new one
 					//Continue gracefully exits and restarts the loop
 					continue
