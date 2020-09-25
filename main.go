@@ -98,7 +98,7 @@ func (s Screen) Scramble() Screen {
 			Print.Value = fmt.Sprint("\x1b["+strconv.Itoa(Print.Y)+";"+strconv.Itoa(Print.X)+"H\x1b[38:2:0:200:0m"+value)
 
 			fmt.Printf(Print.Value)
-			time.Sleep(20*time.Millisecond)
+			time.Sleep(1*time.Millisecond)
 		}
 	}
 
@@ -369,7 +369,7 @@ func DoRender() {
 					//Continue gracefully exits and restarts the loop
 					continue
 				}
-				time.Sleep(20*time.Millisecond)
+				time.Sleep(1*time.Millisecond)
 			}
 
 }
